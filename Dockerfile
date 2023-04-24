@@ -15,9 +15,6 @@ RUN curl https://dl.min.io/client/mc/release/linux-amd64/mc \
                  --create-dirs \
                  -o /usr/bin/mc \
         && chmod +x /usr/bin/mc
-RUN groupadd --gid 1000 app \
-    && adduser --uid 1000 --home /app --gid 1000 --disabled-password --gecos "" app
-USER app
 WORKDIR /app
 RUN mkdir /app/backup
 
@@ -25,7 +22,4 @@ RUN mkdir /app/backup
 ADD ./backup.sh /app/backup.sh
 
 USER root
-RUN chown -R app:app /app \
-  && chmod -R 755 /app
-USER app
 CMD ["/bin/bash","-c","/app/backup.sh"]
